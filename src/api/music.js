@@ -4,7 +4,7 @@ import { commonPcParams } from './config';
 
 // 获取轮播图数据（移动端抓取）
 function getPicList() {
-  const url = `${ports.dev}api/getPicList`;
+  const url = `${ports}api/getPicList`;
   const params = {
     _: 1571908158818,
     g_tk: 5381,
@@ -22,7 +22,7 @@ function getPicList() {
 }
 // 获取歌单列表（pc端）
 function getMvList() {
-  const url = `${ports.dev}api/getMvList`;
+  const url = `${ports}api/getMvList`;
   const params = Object.assign({}, commonPcParams, {
     '-': 'recom9761245928522506',
     data: {
@@ -66,7 +66,7 @@ function getMvList() {
 
 // 获取歌手列表(pc端)
 function getSingerList() {
-  const url = `${ports.dev}api/getSingerList`;
+  const url = `${ports}api/getSingerList`;
   const params = Object.assign({}, commonPcParams, {
     '-': 'getUCGI7153872175137714',
     data: {
@@ -93,7 +93,7 @@ function getSingerList() {
 
 // 歌手歌单列表(歌手详情页) (旧的接口)
 function getSingerSonglist({ mid }) {
-  const url = `${ports.dev}api/getSongList`;
+  const url = `${ports}api/getSongList`;
   const params = {
     hostUin: 0,
     needNewCode: 0,
@@ -117,7 +117,7 @@ function getSingerSonglist({ mid }) {
 
 // 获取歌曲的vkey（pc端）
 function getSongVkey(midArr) {
-  const url = `${ports.dev}api/getSongVkey`;
+  const url = `${ports}api/getSongVkey`;
 
   const params = Object.assign({}, commonPcParams, {
     '-': 'getplaysongvkey23526164818409767',
@@ -151,7 +151,7 @@ function getSongVkey(midArr) {
 
 // 获取歌曲的歌词(移动端)
 function getLyric(musicid, musicmid) {
-  const url = `${ports.dev}api/getLyric`;
+  const url = `${ports}api/getLyric`;
   const params = {
     g_tk: 556108922,
     uin: 0,
@@ -175,7 +175,7 @@ function getLyric(musicid, musicmid) {
 
 // 获取歌单详情页(pc端)
 function getDissList(disstid) {
-  const url = `${ports.dev}api/getDissList`;
+  const url = `${ports}api/getDissList`;
   const params = Object.assign({}, commonPcParams, {
     g_tk: 556108922,
     disstid,
@@ -193,7 +193,7 @@ function getDissList(disstid) {
 
 // 获取排行榜(移动端)
 function getRank() {
-  const url = `${ports.dev}api/getRank`;
+  const url = `${ports}api/getRank`;
   const params = {
     _: 1573628552373,
     data: {
@@ -219,7 +219,7 @@ function getRank() {
 
 // 获取搜索框热门标签(移动端)
 function getHotKey() {
-  const url = `${ports.dev}api/getHotKey`;
+  const url = `${ports}api/getHotKey`;
   const params = {
     cgiKey: 'GetHomePage',
     _: 1573707142241,
@@ -253,7 +253,7 @@ function getHotKey() {
 
 // 搜索列表接口（移动端）
 function getSearchList(query, page, perpage) {
-  const url = `${ports.dev}api/getSearchList`;
+  const url = `${ports}api/getSearchList`;
   const params = {
     _: 1573718445297,
     g_tk: 556108922,
