@@ -4,7 +4,7 @@ const modeUrlObj = {
     publicPath: '/',
   },
   production: {
-    publicPath: './',
+    publicPath: '/music/',
   },
   test: {
     publicPath: 'https://www.xxx',
