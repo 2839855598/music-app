@@ -33,6 +33,7 @@ module.exports = {
     'no-useless-return': 0,
     'no-lonely-if': 0,
     'camelcase': 0,
+    'guard-for-in': 0,
 },
   parserOptions: {
     parser: 'babel-eslint',
