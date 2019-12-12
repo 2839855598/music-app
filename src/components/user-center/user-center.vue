@@ -23,33 +23,33 @@
       <!--收藏列表 和 最近播放列表-->
       <div class="list-wrapper" ref="listWrapper">
         <!--收藏列表-->
-        <scroll
-          class="list-scroll"
-          v-if="currentIndex === 0"
-          :data="cloneFavoriteList"
-          ref="favoriteList"
-        >
-          <div class="list-inner">
-            <song-list @select="selectSong" :songs="cloneFavoriteList" ></song-list>
-          </div>
-        </scroll>
-        <!--最近播放列表-->
-        <scroll
-          class="list-scroll"
-          v-if="currentIndex === 1"
-          :data="clonePlaylistHistory"
-          ref="playList"
-        >
-          <div class="list-inner">
-            <song-list @select="selectSong" :songs="clonePlaylistHistory" ></song-list>
-          </div>
-        </scroll>
+
       </div>
       <!--没有结果界面-->
       <div class="no-result-wrapper" v-show="noResult">
         <no-result :title="noResultDesc"></no-result>
       </div>
+    </div> <scroll
+    class="list-scroll"
+    v-if="currentIndex === 0"
+    :data="cloneFavoriteList"
+    ref="favoriteList"
+  >
+    <div class="list-inner">
+      <song-list @select="selectSong" :songs="cloneFavoriteList" ></song-list>
     </div>
+  </scroll>
+    <!--最近播放列表-->
+    <scroll
+      class="list-scroll"
+      v-if="currentIndex === 1"
+      :data="clonePlaylistHistory"
+      ref="playList"
+    >
+      <div class="list-inner">
+        <song-list @select="selectSong" :songs="clonePlaylistHistory" ></song-list>
+      </div>
+    </scroll>
   </transition>
 </template>
 
