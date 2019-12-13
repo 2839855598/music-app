@@ -90,3 +90,9 @@ export function createNewSong(newMusic, vkey, filename) {
       url: `http://aqqmusic.tc.qq.com/amobile.music.tc.qq.com/${filename}?guid=5898566352&vkey=${vkey}&uin=0&fromtag=38`,
     });
 }
+
+export function createUrl(vkey, filename) {
+  let url = '';
+  url = `http://aqqmusic.tc.qq.com/amobile.music.tc.qq.com/${filename}?guid=5898566352&vkey=${vkey}&uin=0&fromtag=38`;
+  return url;
+}

@@ -26,22 +26,23 @@
         <scroll
           class="list-scroll"
           v-if="currentIndex === 0"
-          :data="favoriteList"
+          :data="cloneFavoriteList"
           ref="favoriteList"
         >
           <div class="list-inner">
-            <song-list @select="selectSong" :songs="favoriteList" ></song-list>
+            <song-list @select="selectSong" :songs="cloneFavoriteList" ></song-list>
           </div>
         </scroll>
+
         <!--最近播放列表-->
         <scroll
           class="list-scroll"
           v-if="currentIndex === 1"
-          :data="playHistory"
+          :data="clonePlaylistHistory"
           ref="playList"
         >
           <div class="list-inner">
-            <song-list @select="selectSong" :songs="playHistory" ></song-list>
+            <song-list @select="selectSong" :songs="clonePlaylistHistory" ></song-list>
           </div>
         </scroll>
       </div>
@@ -60,8 +61,9 @@
     import NoResult from '@baseComps/no-result/no-result';
     import { mapState, mapActions } from 'vuex';
     import { playListMixin } from '@common/js/mixin';
-    import Song from '@common/js/song';
+    import Song, { createUrl } from '@common/js/song';
 
+    const MAXNUM = 16;
     export default {
       name: 'user-center',
       mixins: [playListMixin],
@@ -76,7 +78,20 @@
               name: '最近听的',
             },
           ],
+          // 限制getVkey获取次数，有可能一直递归下去，所以作限制
+          vkNum: 0,
+          // 克隆一份本地playListHistory，因为vkey有时间限制，所以打开用户中心
+          // 都要获取最新的vkey，防止播放错误。
+          clonePlaylistHistory: [],
+          // 同上
+          cloneFavoriteList: [],
         };
+      },
+      mounted() {
+        // 为什么不直接传递playHistory给子组件渲染，因为playHistory里面歌曲的
+        // vkey可能过期了，导致播放错误，应该每次打开用户中心都要获取最新的vkey
+        this._normalizeSong(this.favoriteList, this.cloneFavoriteList);
+        this._normalizeSong(this.playHistory, this.clonePlaylistHistory);
       },
       computed: {
         // 没有结果界面
@@ -135,6 +150,41 @@
           this.randomPlay({
             list,
           });
+        },
+        // 格式化localStorage数据，主要是获取最新的vkey，不用原来localStorage中的vkey
+        _normalizeSong(list, cloneList) {
+          const songMidArr = list.map(item => item.mid);
+          if(songMidArr.length) {
+            this.$api.music.getSongVkey(songMidArr)
+              .then(({ data: { req_0: { data: { midurlinfo } } } }) => {
+                // 正确的数据是每个item里面都有filename
+                if(midurlinfo.every(item => !item.filename)) {
+                  // 因为有可能一直无限获取vkey，所以作出请求次数限制
+                  this.vkNum++;
+                  if(this.vkNum >= MAXNUM) {
+                    return;
+                  }
+                  // return不能省，之后的list.forEach不会执行，性能好一点
+                  return this._normalizeSong(list, cloneList);
+                }
+                list.forEach((item, index) => {
+                  if(midurlinfo[index]) {
+                    const { vkey, filename } = midurlinfo[index];
+                    if(vkey) {
+                      const obj = {};
+                      for(const k in item) {
+                        if(k === 'url') {
+                          obj[k] = createUrl(vkey, filename);
+                        } else {
+                          obj[k] = item[k];
+                        }
+                      }
+                      cloneList.push(obj);
+                    }
+                  }
+                });
+              });
+          }
         },
         ...mapActions([
           'insertSong',
