@@ -5,6 +5,7 @@
     :listenScroll="listenScroll"
     @scroll="scroll"
     :probeType="probeType"
+    :refreshDelay="refreshDelay"
     ref="scroll">
     <ul>
       <li v-for="(group, index) in data"  class="list-group" ref="listGroup" :key="index">
@@ -66,6 +67,7 @@
           scrollY: -1,
           currentIndex: 0,
           differ: -1,
+          refreshDelay: 200,
         };
       },
       computed: {
