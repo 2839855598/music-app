@@ -127,7 +127,7 @@ app.use('/api', routes);
 // 线上部署就不需要下面这个了
 // app.use(express.static('./dist'));
 
-const port = '9100';
+const port = '9090';
 
 
 module.exports = app.listen(port, (err) => {
