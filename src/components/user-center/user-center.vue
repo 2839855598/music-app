@@ -191,6 +191,16 @@
           'randomPlay',
         ]),
       },
+      watch: {
+        // 观察最近播放
+        playHistory(newSongs) {
+          this.clonePlaylistHistory.unshift(newSongs[0]);
+        },
+        // 观察喜爱列表
+        favoriteList(newSongs) {
+          this.cloneFavoriteList.unshift(newSongs[0]);
+        },
+      },
       components: {
         Switches,
         Scroll,

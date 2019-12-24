@@ -23,20 +23,20 @@
         </div>
       </li>
       <!--当还可以加载数据时候，就一直在数据的底部显示loading，不可在加载数据就隐藏-->
-      <loading v-show="hasMore" title=""></loading>
+      <loading v-if="hasMore" title=""></loading>
     </ul>
-    <!--搜索无结果 界面-->
-    <div class="no-result-wrapper" v-show="!hasMore && !result.length">
-      <!--title是个写死的数据， :title才是动态属性-->
+    <!--搜索无结果 界面，使用伪类实现，就不使用组件方式了-->
+    <!--<div class="no-result-wrapper" v-show="!hasMore && !result.length">
+      &lt;!&ndash;title是个写死的数据， :title才是动态属性&ndash;&gt;
       <no-result title="抱歉，暂无搜索结果"></no-result>
-    </div>
+    </div>-->
   </scroll>
 </template>
 
 <script>
     import Scroll from '@baseComps/scroll/scroll';
     import Loading from '@baseComps/loading/loading';
-    import NoResult from '@baseComps/no-result/no-result';
+    // import NoResult from '@baseComps/no-result/no-result';
     import { mapMutations, mapActions } from 'vuex';
     import { createSong } from '@common/js/song';
     import Singer from '@common/js/singer';
@@ -216,7 +216,7 @@
       components: {
         Scroll,
         Loading,
-        NoResult,
+        // NoResult,
       },
     };
 </script>
@@ -256,5 +256,13 @@
       top: 50%;
       transform: translateY(-50%);
     }
+  }
+  /*使用伪类实现无结果，不用组件*/
+  .suggest-list:empty::before {
+    content: '暂无搜索结果';
+    display: block;
+    line-height: 300px;
+    text-align: center;
+    color: gray;
   }
 </style>

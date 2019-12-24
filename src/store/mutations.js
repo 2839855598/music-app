@@ -45,5 +45,6 @@ const mutations = {
     // 不能直接赋值list，会报错
     state.favoriteList = list.slice();
   },
+
 };
 export default mutations;
